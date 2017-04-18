@@ -19,19 +19,19 @@ class Array
     # header
     if options[:header]
       header_columns = options[:header_columns].blank? ? columns.map(&:to_s).map(&:humanize) : options[:header_columns]
-      data << header_columns.join(',')
+      data << header_columns.join(';')
     end
 
     self.each do |obj|
       data << columns.map do |column|
         begin
           column_value = obj.send(column).to_s
-          needs_quotes = (column_value.include?(",") || column_value.include?("\n"))
+          needs_quotes = (column_value.include?(";") || column_value.include?("\n"))
           needs_quotes ? "\"#{column_value}\"" : column_value
         rescue
           ''
         end
-      end.join(',')
+      end.join(';')
     end
     data.join("\n")
   end
